@@ -12,7 +12,7 @@ namespace TestNinja.NET8.Fundamentals
         {
             if (string.IsNullOrWhiteSpace(error))
                 throw new ArgumentNullException(nameof(error));
-                
+
             LastError = error; 
             
             // Write the log to a storage
