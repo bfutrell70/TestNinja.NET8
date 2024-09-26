@@ -40,5 +40,32 @@ namespace TestNinja.NET8.UnitTests
 
 			Assert.That(result, Is.EqualTo(expected));
 		}
+
+		[Test]
+		public void GetOddNumbers_LimitIsGreaterThanZero_ReturnOddNumbersUpToLimit()
+		{
+			var result = _math.GetOddNumbers(5);
+
+			// most general
+			// doesn't care about the value - too general
+			//Assert.That(result, Is.Not.Empty);
+
+			// more specific, but doesn't validate values
+			//Assert.That(result.Count(), Is.EqualTo(3));
+
+			// most specific
+			//Assert.That(result, Does.Contain(1));
+			//Assert.That(result, Does.Contain(3));
+			//Assert.That(result, Does.Contain(5));
+
+			// verifies that there are three values, and that the values are correct
+			Assert.That(result, Is.EquivalentTo(new[] { 1, 3, 5 }));
+
+			// verifies the list is in order
+			//Assert.That(result, Is.Ordered);
+
+			// verifies all elements are unique
+			//Assert.That(result, Is.Unique);
+		}
 	}
 }
