@@ -10,10 +10,12 @@ namespace TestNinja.NET8.Mocking
     public class VideoService
     {
         private IFileReader _fileReader = default!;
+        private IVideoRepository _videoRepository;
 
-        public VideoService(IFileReader fileReader)
+        public VideoService(IFileReader fileReader, IVideoRepository videoRepository)
         {
             _fileReader = fileReader;
+            _videoRepository = videoRepository;
         }
 
         public string? ReadVideoTitle()
@@ -28,19 +30,13 @@ namespace TestNinja.NET8.Mocking
         public string GetUnprocessedVideosAsCsv()
         {
             var videoIds = new List<int>();
-            
-            using (var context = new VideoContext())
-            {
-                var videos = 
-                    (from video in context.Videos
-                    where !video.IsProcessed
-                    select video).ToList();
-                
-                foreach (var v in videos)
-                    videoIds.Add(v.Id);
 
-                return string.Join(",", videoIds);
-            }
+            var videos = _videoRepository.GetUnprocessedVideos();
+
+			foreach (var v in videos)
+				videoIds.Add(v.Id);
+
+            return string.Join(",", videoIds);
         }
     }
 
@@ -53,6 +49,8 @@ namespace TestNinja.NET8.Mocking
 
     public class VideoContext : DbContext
     {
-        public DbSet<Video> Videos { get; set; }
+        // In order to use Moq.EntityFrameworkCore, I had to add
+        // the virtual keyword to the Videos DbSet.
+        public virtual DbSet<Video> Videos { get; set; }
     }
 }

@@ -10,8 +10,8 @@ namespace TestNinja.NET8.Mocking
 	{
 		public static void Main()
 		{
-			var service = new VideoService(new FileReader());
-			var title = service.ReadVideoTitle();
+			//var service = new VideoService(new FileReader(), new VideoRepository());
+			//var title = service.ReadVideoTitle();
 		}
 	}
 }
