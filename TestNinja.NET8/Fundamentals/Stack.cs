@@ -9,7 +9,9 @@ namespace TestNinja.NET8.Fundamentals
 
         public int Count => _list.Count;
 
-        public void Push(T obj)
+        // set T to be nullable - in .NET 8 a warning occurs if it isn't nullable and
+        // null is passed as an argument
+        public void Push(T? obj)
         {
             if (obj == null)
                 throw new ArgumentNullException(nameof(obj));
