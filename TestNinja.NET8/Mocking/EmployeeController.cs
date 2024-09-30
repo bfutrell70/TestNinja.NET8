@@ -4,22 +4,20 @@ namespace TestNinja.NET8.Mocking
 {
     public class EmployeeController
     {
-        private readonly EmployeeContext _db;
-
-        public EmployeeController()
+        private readonly IEmployeeRepostory _repository;
+        
+        public EmployeeController(IEmployeeRepostory repository)
         {
-            _db = new EmployeeContext();
+            _repository = repository;
         }
 
+        // two tests:
+        //      verify the returned value is correct
+        //      verify that the correct method is called when deleting an employee
         public ActionResult DeleteEmployee(int id)
         {
-            var employee = _db.Employees.Find(id);
-            // added null check to remove warning in .NET 8.
-            if (employee != null)
-            {
-				_db.Employees.Remove(employee);
-			}
-            _db.SaveChanges();
+            _repository.DeleteEmployee(id);
+
             return RedirectToAction("Employees");
         }
 
