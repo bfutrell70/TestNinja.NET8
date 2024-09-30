@@ -23,6 +23,7 @@ namespace TestNinja.NET8.Mocking
 
 		public void DeleteEmployee(int id)
 		{
+			// no unit test for this method - would need to be part of an integration test
 			var employee = _context.Employees.Find(id);
 			if (employee == null)
 				return;
