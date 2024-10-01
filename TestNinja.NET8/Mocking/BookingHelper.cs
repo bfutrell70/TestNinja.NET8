@@ -20,15 +20,20 @@ namespace TestNinja.NET8.Mocking
         }
     }
 
-    public class UnitOfWork
-    {
-        public IQueryable<T> Query<T>()
-        {
-            return new List<T>().AsQueryable();
-        }
-    }
+	public interface IUnitOfWork
+	{
+		IQueryable<T> Query<T>();
+	}
 
-    public class Booking
+	public class UnitOfWork : IUnitOfWork
+	{
+		public IQueryable<T> Query<T>()
+		{
+			return new List<T>().AsQueryable();
+		}
+	}
+
+	public class Booking
     {
         public string Status { get; set; } = default!;
         public int Id { get; set; }
